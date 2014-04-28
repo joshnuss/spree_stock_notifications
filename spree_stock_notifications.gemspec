@@ -3,13 +3,13 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_stock_notifications'
   s.version     = '2.2.0'
-  s.summary     = 'TODO: Add gem summary here'
-  s.description = 'TODO: Add (optional) gem description here'
+  s.summary     = 'Stock notifications'
+  s.description = 'Notifies when stock levels are low or item goes out of stock'
   s.required_ruby_version = '>= 1.9.3'
 
-  # s.author    = 'You'
-  # s.email     = 'you@example.com'
-  # s.homepage  = 'http://www.spreecommerce.com'
+  s.author    = 'Joshua Nussbaum'
+  s.email     = 'joshnuss@gmail.com'
+  s.homepage  = 'https://github.com/joshnuss/spree_stock_notifications'
 
   #s.files       = `git ls-files`.split("\n")
   #s.test_files  = `git ls-files -- {test,spec,features}/*`.split("\n")
