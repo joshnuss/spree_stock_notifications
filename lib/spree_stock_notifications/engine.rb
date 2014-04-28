@@ -9,6 +9,15 @@ module SpreeStockNotifications
       g.test_framework :rspec
     end
 
+    initializer "spree_stock_notifications.configure" do
+      Spree::StockItem.send :include, StockNotification
+
+      Spree::AppConfiguration.class_eval do
+        preference :low_stock_threshold,      :integer, default: 1
+        preference :stock_notifications_list, :string
+      end
+    end
+
     def self.activate
       Dir.glob(File.join(File.dirname(__FILE__), '../../app/**/*_decorator*.rb')) do |c|
         Rails.configuration.cache_classes ? require(c) : load(c)
