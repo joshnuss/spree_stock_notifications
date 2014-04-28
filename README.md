@@ -1,7 +1,10 @@
-SpreeStockNotifications
+Spree Stock Notifications
 =======================
 
-Introduction goes here.
+Get email notifications when:
+
+ - an item is running low on stock
+ - an item goes out of stock
 
 Installation
 ------------
@@ -19,6 +22,20 @@ bundle
 bundle exec rails g spree_stock_notifications:install
 ```
 
+Configure notification settings `config/initializers/spree_stock_notifications.rb`
+
+```ruby
+Spree.config do |config|
+  admin_emails = Spree::Role.find_by_name('admin').users.map(&:email).join(',')
+
+  # comma separated list of emails
+  config.stock_notifications_list = admin_emails
+
+  # when stock level reaches the "low stock threshold", admins will be notified. Default is 1
+  config.low_stock_threshold = 2
+end
+```
+
 Testing
 -------
 
@@ -30,11 +47,6 @@ bundle exec rake test_app
 bundle exec rspec spec
 ```
 
-When testing your applications integration with this extension you may use it's factories.
-Simply add this require statement to your spec_helper:
+Joshua Nussbaum is a Freelance Software Consultant. You can reach me at joshnuss@gmail.com
 
-```ruby
-require 'spree_stock_notifications/factories'
-```
-
-Copyright (c) 2014 [name of extension creator], released under the New BSD License
+Copyright (c) 2014 Joshua Nussbaum, released under the New BSD License
