@@ -9,13 +9,15 @@ module SpreeStockNotifications
       g.test_framework :rspec
     end
 
-    initializer "spree_stock_notifications.configure" do
-      Spree::StockItem.send :include, StockNotification
-
+    initializer "spree_stock_notifications.environment", before: :load_config_initializers do |app|
       Spree::AppConfiguration.class_eval do
         preference :low_stock_threshold,      :integer, default: 1
         preference :stock_notifications_list, :string
       end
+    end
+
+    initializer "spree_stock_notifications.customizations" do
+      Spree::StockItem.send :include, StockNotification
     end
 
     def self.activate

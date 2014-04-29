@@ -26,7 +26,8 @@ Configure notification settings `config/initializers/spree_stock_notifications.r
 
 ```ruby
 Spree.config do |config|
-  admin_emails = Spree::Role.find_by_name('admin').users.map(&:email).join(',')
+  admin_role   = Spree::Role.find_by_name('admin')
+  admin_emails = admin_role.users.map(&:email).join(',')
 
   # comma separated list of emails
   config.stock_notifications_list = admin_emails
