@@ -1,18 +1,17 @@
 class StockMailer < Spree::BaseMailer
-  def out_of_stock(stock_item)
-    default_mail(stock_item)
+  def out_of_stock(variant)
+    stock_mail(variant, Spree::Config.out_of_stock_notification_emails)
   end
 
-  def low_stock(stock_item)
-    default_mail(stock_item)
+  def low_stock(variant)
+    stock_mail(variant, Spree::Config.low_stock_notification_emails)
   end
 
-private
+  private
 
-  def default_mail(stock_item, options = {})
-    @stock_item = stock_item
-    @variant = stock_item.variant
-    @product = stock_item.variant.product
+  def stock_mail(variant, recipients, options = {})
+    @variant = variant
+    @product = variant.product
 
     if @variant.is_master
       @url = spree.admin_product_variant_url(@product, @variant)
@@ -20,7 +19,6 @@ private
       @url = spree.admin_product_url(@product)
     end
 
-    mail({from: from_address, to: Spree::Config.stock_notifications_list}.merge(options))
+    mail({ from: from_address, to: recipients }.merge(options))
   end
-
 end

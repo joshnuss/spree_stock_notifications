@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_stock_notifications'
-  s.version     = '2.2.0'
+  s.version     = '1.3.0'
   s.summary     = 'Stock notifications'
   s.description = 'Notifies when stock levels are low or item goes out of stock'
   s.required_ruby_version = '>= 1.9.3'
@@ -17,7 +17,6 @@ Gem::Specification.new do |s|
   s.requirements << 'none'
 
   s.add_dependency 'spree_core', '~> 1.3.0'
-  s.add_dependency 'spree_backend'
 
   s.add_development_dependency 'capybara', '~> 2.1'
   s.add_development_dependency 'coffee-rails'

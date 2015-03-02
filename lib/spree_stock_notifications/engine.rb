@@ -12,12 +12,9 @@ module SpreeStockNotifications
     initializer "spree_stock_notifications.environment", before: :load_config_initializers do |app|
       Spree::AppConfiguration.class_eval do
         preference :low_stock_threshold,      :integer, default: 1
-        preference :stock_notifications_list, :string
+        preference :low_stock_notification_emails, :string
+        preference :out_of_stock_notification_emails, :string
       end
-    end
-
-    initializer "spree_stock_notifications.customizations" do
-      Spree::StockItem.send :include, StockNotification
     end
 
     def self.activate
