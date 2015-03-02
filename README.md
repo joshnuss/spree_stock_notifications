@@ -30,7 +30,8 @@ Spree.config do |config|
   admin_emails = admin_role.users.map(&:email).join(',')
 
   # comma separated list of emails
-  config.stock_notifications_list = admin_emails
+  config.low_stock_notification_emails = admin_emails
+  config.out_of_stock_notification_emails = admin_emails
 
   # when stock level reaches the "low stock threshold", admins will be notified. Default is 1
   config.low_stock_threshold = 2
