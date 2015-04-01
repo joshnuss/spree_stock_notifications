@@ -1,13 +1,17 @@
 require 'spec_helper'
 
-describe Spree::StockItem do
+describe Spree::StockItem, type: :model do
   let(:variant) { create(:variant) }
   let(:stock_item) { variant.stock_items.first}
   let(:mail) { double(:mail) }
 
+  before do
+    Spree::Config.stock_notifications_list = "jack@example.com,jill@example.com"
+  end
+
   it "sends notification when out of stock" do
-    StockMailer.should_receive(:out_of_stock).once.with(stock_item).and_return(mail)
-    mail.should_receive(:deliver)
+    expect(StockMailer).to receive(:low_stock).once.with(stock_item).and_return(mail)
+    expect(mail).to receive(:deliver_later)
 
     stock_item.adjust_count_on_hand(10)
     stock_item.adjust_count_on_hand(-5)
@@ -17,8 +21,8 @@ describe Spree::StockItem do
   it "sends notification when low stock" do
     Spree::Config.low_stock_threshold = 5
 
-    StockMailer.should_receive(:low_stock).once.with(stock_item).and_return(mail)
-    mail.should_receive(:deliver)
+    expect(StockMailer).to receive(:low_stock).once.with(stock_item).and_return(mail)
+    expect(mail).to receive(:deliver_later)
 
     stock_item.adjust_count_on_hand(10)
     stock_item.adjust_count_on_hand(-3)
@@ -28,7 +32,7 @@ describe Spree::StockItem do
   it "doesnt sends notification when low stock threshold is nil" do
     Spree::Config.low_stock_threshold = nil
 
-    StockMailer.should_not_receive(:low_stock)
+    expect(StockMailer).not_to receive(:low_stock)
 
     stock_item.adjust_count_on_hand(10)
     stock_item.adjust_count_on_hand(-3)
