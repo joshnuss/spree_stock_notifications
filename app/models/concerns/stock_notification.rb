@@ -10,13 +10,13 @@ private
   def notify_out_of_stock
     out_of_stock = crossed(0)
     yield
-    StockMailer.out_of_stock(self).deliver if out_of_stock
+    StockMailer.out_of_stock(self).deliver_later if out_of_stock
   end
 
   def notify_low_stock
     low_stock = crossed(Spree::Config.low_stock_threshold)
     yield
-    StockMailer.low_stock(self).deliver if low_stock
+    StockMailer.low_stock(self).deliver_later if low_stock
   end
 
   def crossed(threshold)
