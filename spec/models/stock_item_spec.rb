@@ -5,6 +5,10 @@ describe Spree::StockItem, type: :model do
   let(:stock_item) { variant.stock_items.first}
   let(:mail) { double(:mail) }
 
+  before do
+    Spree::Config.stock_notifications_list = "jack@example.com,jill@example.com"
+  end
+
   it "sends notification when out of stock" do
     expect(StockMailer).to receive(:low_stock).once.with(stock_item).and_return(mail)
     expect(mail).to receive(:deliver_later)
