@@ -6,6 +6,7 @@ describe Spree::StockItem, type: :model do
   let(:mail) { double(:mail) }
 
   before do
+    allow_any_instance_of(Spree::Store).to receive(:mail_from_address).and_return('test@example.com')
     Spree::Config.stock_notifications_list = "jack@example.com,jill@example.com"
   end
 
